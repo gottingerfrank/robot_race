@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import robot_race_functions as rr
 from collections import deque, Counter, namedtuple
 from time import time, sleep
@@ -15,11 +18,10 @@ walls, goal, bots = rr.process_maze_init(maze_data)
 robot_moves = deque()
 num_of_turns = 0
 while not rr.is_race_over(bots) and num_of_turns < max_turns:
-  # For every bot in the list of bots, if the bot has not reached the end, add a new move to the robot_moves deque
-  # Add your code below!
+    # For every bot in the list of bots, if the bot has not reached the end, add a new move to the robot_moves deque
+    # Add your code below!
 
-
-  num_of_turns += 1
+    num_of_turns += 1
 
 # Count the number of moves based on the robot names
 # Add your code below!
@@ -45,14 +47,13 @@ bot_data = {}
 
 # Move the robots and update the map based on the moves deque
 while len(robot_moves) > 0:
-  # Make sure to pop moves from the front of the deque
-  # Add your code below!
+    # Make sure to pop moves from the front of the deque
+    # Add your code below!
 
-
-  # Update the maze characters based on the robot positions and print it to the console
-  rr.update_maze_characters(maze_data, bots)
-  rr.print_maze(maze_data)
-  sleep(seconds_between_turns - time() % seconds_between_turns)
+    # Update the maze characters based on the robot positions and print it to the console
+    rr.update_maze_characters(maze_data, bots)
+    rr.print_maze(maze_data)
+    sleep(seconds_between_turns - time() % seconds_between_turns)
 
 # Print out the results!
-#rr.print_results(bot_scores)
+# rr.print_results(bot_scores)

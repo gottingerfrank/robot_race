@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import csv
 import random as rand
 
@@ -19,6 +22,7 @@ def print_maze(maze_data):
         print(printed_row)
     print('\n')
 
+
 def is_race_over(bots):
     done = True
     for bot in bots:
@@ -33,7 +37,8 @@ def print_results(bot_score_data):
     print("----- RESULTS -----")
     for score_data in bot_score_data:
         print(str(place) + '. Robot: ' + str(score_data.name))
-        print('  ' +  'Score: ' + str(score_data.score) + ' Moves: ' + str(score_data.num_moves) + ' Collisions: ' + str(score_data.num_collisions))
+        print('  ' + 'Score: ' + str(score_data.score) + ' Moves: ' + str(score_data.num_moves) + ' Collisions: ' + str(
+            score_data.num_collisions))
         place += 1
 
 
@@ -44,11 +49,11 @@ def process_maze_init(maze_data):
     for r, row in enumerate(maze_data):
         for c, col in enumerate(row):
             if col == '#':
-                walls.append(Wall(c,r))
+                walls.append(Wall(c, r))
             elif col == '$':
-                goal = Goal(c,r)
+                goal = Goal(c, r)
             elif col.isalpha():
-                bots.append(Robot(c,r, col))
+                bots.append(Robot(c, r, col))
     return [walls, goal, bots]
 
 
@@ -56,11 +61,11 @@ def compute_robot_logic(walls, goal, bot):
     moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     move_names = {(-1, 0): 'left', (1, 0): 'right', (0, -1): 'down', (0, 1): 'up', (0, 0): 'nothing'}
 
-    selected_move = moves[rand.randint(0,3)]
+    selected_move = moves[rand.randint(0, 3)]
     move_dist = []
     for m, move in enumerate(moves):
         dist = calc_manhattan_dist(bot.calc_x + move[0], bot.calc_y + move[1], goal.x, goal.y)
-        move_dist.append([m,dist])
+        move_dist.append([m, dist])
     move_dist.sort(key=lambda x: x[1])
     if rand.random() < 0.45:
         selected_move = moves[move_dist[0][0]]
@@ -85,7 +90,7 @@ def compute_robot_logic(walls, goal, bot):
                 break
 
         if not found_alternate_move:
-            selected_move = (0,0)
+            selected_move = (0, 0)
 
     if bot.calc_x + selected_move[0] == goal.x and bot.calc_y + selected_move[1] == goal.y:
         bot.has_finished = True
@@ -103,7 +108,7 @@ def update_maze_characters(old_maze_chars, bots):
     for r, row in enumerate(old_maze_chars):
         for c, col in enumerate(row):
             if col.isalpha() or col == '+':
-                to_replace.append((c,r))
+                to_replace.append((c, r))
     for elem in to_replace:
         old_maze_chars[elem[1]][elem[0]] = '_'
     for bot in bots:
